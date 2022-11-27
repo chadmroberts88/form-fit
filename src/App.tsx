@@ -6,8 +6,8 @@ import * as tf from '@tensorflow/tfjs-core';
 import '@tensorflow/tfjs-backend-webgl';
 
 function App() {
-  const webcamRef = useRef<any>(null);
-  const canvasRef = useRef<any>(null);
+  const webcamRef = useRef<Webcam>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const runPosenet = async () => {
     const model = poseDetection.SupportedModels.MoveNet;
@@ -21,8 +21,9 @@ function App() {
 
   const detect = async (detector: poseDetection.PoseDetector) => {
     if (
-      typeof webcamRef.current !== 'undefined' &&
+      typeof webcamRef.current !== undefined &&
       webcamRef.current !== null &&
+      webcamRef.current.video !== null &&
       webcamRef.current.video.readyState === 4
     ) {
       const video: HTMLVideoElement = webcamRef.current.video;
@@ -34,6 +35,14 @@ function App() {
 
       const pose = await detector.estimatePoses(video);
       console.log(pose[0]);
+    }
+  };
+
+  const draw = () => {
+    if (typeof canvasRef.current !== undefined && canvasRef.current !== null) {
+      const canvas: HTMLCanvasElement = canvasRef.current;
+      const ctx: CanvasRenderingContext2D | null = canvas.getContext('2d');
+      console.log({ ctx });
     }
   };
 
