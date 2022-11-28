@@ -88,15 +88,23 @@ function App() {
       // draw points
       keypoints.forEach((keypoint: Keypoint) => {
         const score = keypoint.score !== null ? keypoint.score : 1;
+        const radius = 6;
 
         if (ctx !== null && score !== undefined && score >= SCORE_THRESHOLD) {
           ctx.beginPath();
-          ctx.arc(keypoint.x, keypoint.y, 6, 0, 2 * Math.PI);
-          ctx.fillStyle = '#4BB543';
+          ctx.arc(keypoint.x, keypoint.y, radius, 0, 2 * Math.PI);
+          ctx.fillStyle = setPointColor(keypoint);
           ctx.fill();
         }
       });
     }
+  };
+
+  const setPointColor = (keypoint: Keypoint): string => {
+    const name: string = keypoint.name ?? '';
+    const whitePoints: string[] = ['nose', 'left_eye', 'right_eye', 'left_ear', 'right_ear'];
+    const color = whitePoints.includes(name) ? '#FFFFFF' : '#4BB543';
+    return color;
   };
 
   runPoseDetection();
@@ -133,6 +141,7 @@ function App() {
           borderWidth: '2px',
           borderStyle: 'solid',
           borderColor: 'white',
+          // backgroundColor: 'black',
         }}
       />
     </div>
