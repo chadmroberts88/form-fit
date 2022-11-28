@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import './App.css';
 import Webcam from 'react-webcam';
+import { Keypoint } from '@tensorflow-models/pose-detection';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 import * as tf from '@tensorflow/tfjs-core';
 import '@tensorflow/tfjs-backend-webgl';
@@ -9,7 +10,7 @@ function App() {
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const runPosenet = async () => {
+  const runPoseDetection = async () => {
     const model = poseDetection.SupportedModels.MoveNet;
     const config = { modelType: poseDetection.movenet.modelType.SINGLEPOSE_THUNDER };
     const detector = await poseDetection.createDetector(model, config);
@@ -34,19 +35,36 @@ function App() {
       webcamRef.current.video.height = videoHeight;
 
       const pose = await detector.estimatePoses(video);
-      console.log(pose[0]);
+      drawKeypoints(pose[0]?.keypoints, videoWidth, videoHeight);
     }
   };
 
-  const draw = () => {
-    if (typeof canvasRef.current !== undefined && canvasRef.current !== null) {
+  const drawKeypoints = (keypoints: Keypoint[], videoWidth: number, videoHeight: number) => {
+    if (
+      typeof canvasRef.current !== undefined &&
+      canvasRef.current !== null &&
+      keypoints !== undefined
+    ) {
       const canvas: HTMLCanvasElement = canvasRef.current;
       const ctx: CanvasRenderingContext2D | null = canvas.getContext('2d');
-      console.log({ ctx });
+      canvas.width = videoWidth;
+      canvas.height = videoHeight;
+
+      keypoints.forEach((keypoint: Keypoint) => {
+        const score = keypoint.score !== null ? keypoint.score : 1;
+        const scoreThreshold = 0.3;
+
+        if (ctx !== null && score !== undefined && score >= scoreThreshold) {
+          ctx.beginPath();
+          ctx.arc(keypoint.x, keypoint.y, 6, 0, 2 * Math.PI);
+          ctx.fillStyle = '#4BB543';
+          ctx.fill();
+        }
+      });
     }
   };
 
-  runPosenet();
+  runPoseDetection();
 
   return (
     <div className="App">
@@ -77,6 +95,9 @@ function App() {
           zIndex: 9,
           width: 640,
           height: 480,
+          borderWidth: '2px',
+          borderStyle: 'solid',
+          borderColor: 'white',
         }}
       />
     </div>
