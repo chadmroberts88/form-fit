@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Layout } from 'antd';
 import './App.css';
 import Webcam from 'react-webcam';
@@ -13,6 +13,8 @@ function App() {
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const SCORE_THRESHOLD = 0.3;
+
+  const [showCamera, setShowCamera] = useState<boolean>(true);
 
   const runPoseDetection = async () => {
     const model = poseDetection.SupportedModels.MoveNet;
@@ -117,7 +119,7 @@ function App() {
     <div className="App">
       <Layout style={{ minHeight: '100vh', backgroundColor: '#282c34' }}>
         <Sider style={{ padding: '20px' }}>
-          <ControlPanel />
+          <ControlPanel showCamera={showCamera} setShowCamera={setShowCamera} />
         </Sider>
         <Layout>
           <Content
@@ -159,7 +161,7 @@ function App() {
                 borderWidth: '2px',
                 borderStyle: 'solid',
                 borderColor: 'white',
-                // backgroundColor: 'black',
+                backgroundColor: showCamera ? 'transparent' : 'black',
               }}
             />
           </Content>

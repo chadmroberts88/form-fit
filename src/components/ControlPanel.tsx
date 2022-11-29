@@ -1,10 +1,24 @@
 import React from 'react';
 import { Switch } from 'antd';
 
-const ControlPanel = (): JSX.Element => {
+const ControlPanel = ({
+  showCamera,
+  setShowCamera,
+}: {
+  showCamera: boolean;
+  setShowCamera: (showCamera: boolean) => void;
+}): JSX.Element => {
   return (
     <div>
-      <Switch />
+      <p>Camera Image</p>
+      <Switch
+        checkedChildren="On"
+        unCheckedChildren="Off"
+        checked={showCamera}
+        onChange={() => {
+          setShowCamera(!showCamera);
+        }}
+      />
     </div>
   );
 };
