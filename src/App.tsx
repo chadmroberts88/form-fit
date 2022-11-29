@@ -1,9 +1,13 @@
 import React, { useRef } from 'react';
+import { Layout } from 'antd';
 import './App.css';
 import Webcam from 'react-webcam';
 import { Keypoint } from '@tensorflow-models/pose-detection';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 import '@tensorflow/tfjs-backend-webgl';
+import ControlPanel from './components/ControlPanel';
+
+const { Sider, Content } = Layout;
 
 function App() {
   const webcamRef = useRef<Webcam>(null);
@@ -111,39 +115,56 @@ function App() {
 
   return (
     <div className="App">
-      <Webcam
-        id="video"
-        ref={webcamRef}
-        style={{
-          position: 'absolute',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          left: 0,
-          right: 0,
-          textAlign: 'center',
-          zIndex: 9,
-          width: 640,
-          height: 480,
-        }}
-      />
-      <canvas
-        ref={canvasRef}
-        style={{
-          position: 'absolute',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          left: 0,
-          right: 0,
-          textAlign: 'center',
-          zIndex: 9,
-          width: 640,
-          height: 480,
-          borderWidth: '2px',
-          borderStyle: 'solid',
-          borderColor: 'white',
-          // backgroundColor: 'black',
-        }}
-      />
+      <Layout style={{ minHeight: '100vh', backgroundColor: '#282c34' }}>
+        <Sider style={{ padding: '20px' }}>
+          <ControlPanel />
+        </Sider>
+        <Layout>
+          <Content
+            style={{
+              position: 'relative',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#282c34',
+            }}
+          >
+            <Webcam
+              id="video"
+              ref={webcamRef}
+              style={{
+                position: 'absolute',
+                marginLeft: 'auto',
+                marginRight: 'auto',
+                left: 0,
+                right: 0,
+                textAlign: 'center',
+                zIndex: 9,
+                width: 640,
+                height: 480,
+              }}
+            />
+            <canvas
+              ref={canvasRef}
+              style={{
+                position: 'absolute',
+                marginLeft: 'auto',
+                marginRight: 'auto',
+                left: 0,
+                right: 0,
+                textAlign: 'center',
+                zIndex: 9,
+                width: 640,
+                height: 480,
+                borderWidth: '2px',
+                borderStyle: 'solid',
+                borderColor: 'white',
+                // backgroundColor: 'black',
+              }}
+            />
+          </Content>
+        </Layout>
+      </Layout>
     </div>
   );
 }
