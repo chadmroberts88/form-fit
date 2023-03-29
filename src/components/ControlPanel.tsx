@@ -9,8 +9,15 @@ const ControlPanel = ({
   setShowCamera: (showCamera: boolean) => void;
 }): JSX.Element => {
   return (
-    <div>
-      <p>Camera Image</p>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }}
+    >
+      <p>Camera Image:</p>
       <Switch
         checkedChildren="On"
         unCheckedChildren="Off"
