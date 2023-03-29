@@ -1,8 +1,11 @@
 import React from 'react';
 import { Button } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
 
-function WorkoutList(): JSX.Element {
+interface WorkoutListProps {
+  handleSetWorkout: (workout: string) => void;
+}
+
+function WorkoutList({ handleSetWorkout }: WorkoutListProps): JSX.Element {
   const containerStyle: React.CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
@@ -20,11 +23,15 @@ function WorkoutList(): JSX.Element {
 
   return (
     <div style={containerStyle}>
-      <Button type="primary" icon={<UserOutlined />} style={buttonStyle}>
+      <Button
+        type="primary"
+        style={buttonStyle}
+        onClick={() => handleSetWorkout('Seated Shoulder Press')}
+      >
         Seated Shoulder Press
       </Button>
-      <Button type="primary" icon={<UserOutlined />} style={buttonStyle}>
-        Workout 2
+      <Button type="primary" style={buttonStyle} onClick={() => handleSetWorkout('Lateral Raises')}>
+        Lateral Raises
       </Button>
     </div>
   );

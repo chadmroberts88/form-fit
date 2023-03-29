@@ -49,6 +49,11 @@ const timerContainerStyle: React.CSSProperties = {
 
 function App() {
   const [showCamera, setShowCamera] = useState<boolean>(true);
+  const [selectedWorkout, setSelectedWorkout] = useState<string>('Seated Shoulder Press');
+
+  const handleSetWorkOut = (workout: string): void => {
+    setSelectedWorkout(workout);
+  };
 
   return (
     <div className="App">
@@ -59,7 +64,7 @@ function App() {
               Select Workout
             </Title>
             <div style={siderContentStyle}>
-              <WorkoutList />
+              <WorkoutList handleSetWorkout={handleSetWorkOut} />
               <ControlPanel showCamera={showCamera} setShowCamera={setShowCamera} />
             </div>
           </div>
@@ -76,11 +81,8 @@ function App() {
         </Layout>
         <Sider width="260px">
           <div style={siderContainerStyle}>
-            <Title level={4} style={titleStyle}>
-              Workout Settings
-            </Title>
             <div style={siderContentStyle}>
-              <SettingsPanel />
+              <SettingsPanel workout={selectedWorkout} />
             </div>
           </div>
         </Sider>

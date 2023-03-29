@@ -141,7 +141,8 @@ const Canvas = ({ showCamera }: { showCamera: boolean }): JSX.Element => {
           borderWidth: '2px',
           borderStyle: 'solid',
           borderColor: 'white',
-          backgroundColor: showCamera ? 'transparent' : 'black',
+          borderRadius: 6,
+          backgroundColor: showCamera ? 'white' : 'black',
         }}
       />
     </>
