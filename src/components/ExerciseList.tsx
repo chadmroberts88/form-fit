@@ -1,11 +1,11 @@
 import React from 'react';
 import { Button } from 'antd';
 
-interface WorkoutListProps {
-  handleSetWorkout: (workout: string) => void;
+interface ExerciseListProps {
+  handleSetExercise: (exercise: string) => void;
 }
 
-function WorkoutList({ handleSetWorkout }: WorkoutListProps): JSX.Element {
+function ExerciseList({ handleSetExercise }: ExerciseListProps): JSX.Element {
   const containerStyle: React.CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
@@ -26,15 +26,19 @@ function WorkoutList({ handleSetWorkout }: WorkoutListProps): JSX.Element {
       <Button
         type="primary"
         style={buttonStyle}
-        onClick={() => handleSetWorkout('Seated Shoulder Press')}
+        onClick={() => handleSetExercise('Seated Shoulder Press')}
       >
         Seated Shoulder Press
       </Button>
-      <Button type="primary" style={buttonStyle} onClick={() => handleSetWorkout('Lateral Raises')}>
+      <Button
+        type="primary"
+        style={buttonStyle}
+        onClick={() => handleSetExercise('Lateral Raises')}
+      >
         Lateral Raises
       </Button>
     </div>
   );
 }
 
-export default WorkoutList;
+export default ExerciseList;

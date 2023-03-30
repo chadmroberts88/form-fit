@@ -5,7 +5,7 @@ import './App.css';
 
 import Canvas from './components/Canvas';
 import ControlPanel from './components/ControlPanel';
-import WorkoutList from './components/WorkoutList';
+import ExerciseList from './components/ExerciseList';
 import SettingsPanel from './components/SettingsPanel';
 import ProgressIndicator from './components/ProgressIndicator';
 
@@ -58,10 +58,20 @@ const timerContainerStyle: React.CSSProperties = {
 
 function App() {
   const [showCamera, setShowCamera] = useState<boolean>(true);
-  const [selectedWorkout, setSelectedWorkout] = useState<string>('Seated Shoulder Press');
+  const [selectedExercise, setSelectedExercise] = useState<string>('Seated Shoulder Press');
+  const [exerciseState, setExerciseState] = useState<string>('STOP');
+  const [pace, setPace] = useState<number>(4);
 
-  const handleSetWorkOut = (workout: string): void => {
-    setSelectedWorkout(workout);
+  const handleSetExercise = (exercise: string): void => {
+    setSelectedExercise(exercise);
+  };
+
+  const handleSetExerciseState = (exerciseState: string): void => {
+    setExerciseState(exerciseState);
+  };
+
+  const handleSetPace = (pace: number): void => {
+    setPace(pace);
   };
 
   return (
@@ -70,10 +80,10 @@ function App() {
         <Sider width="260px" style={siderStyle}>
           <div style={siderContainerStyle}>
             <Title level={4} style={titleStyle}>
-              Select Workout
+              Select Exercise
             </Title>
             <div style={siderContentStyle}>
-              <WorkoutList handleSetWorkout={handleSetWorkOut} />
+              <ExerciseList handleSetExercise={handleSetExercise} />
               <ControlPanel showCamera={showCamera} setShowCamera={setShowCamera} />
             </div>
           </div>
@@ -84,14 +94,23 @@ function App() {
               <Canvas showCamera={showCamera} />
             </div>
             <div style={timerContainerStyle}>
-              <ProgressIndicator />
+              <ProgressIndicator
+                pace={pace}
+                exerciseState={exerciseState}
+                handleSetExerciseState={handleSetExerciseState}
+              />
             </div>
           </Content>
         </Layout>
         <Sider width="260px" style={siderStyle}>
           <div style={siderContainerStyle}>
             <div style={siderContentStyle}>
-              <SettingsPanel workout={selectedWorkout} />
+              <SettingsPanel
+                exercise={selectedExercise}
+                exerciseState={exerciseState}
+                handleSetExerciseState={handleSetExerciseState}
+                handleSetPace={handleSetPace}
+              />
             </div>
           </div>
         </Sider>

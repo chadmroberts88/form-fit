@@ -4,7 +4,10 @@ import { Button, Modal, Typography, InputNumber } from 'antd';
 const { Text, Title } = Typography;
 
 interface SettingsPanelProps {
-  workout: string;
+  exercise: string;
+  exerciseState: string;
+  handleSetExerciseState: (exerciseState: string) => void;
+  handleSetPace: (pace: number) => void;
 }
 
 const panelContainerStyle: React.CSSProperties = {
@@ -25,16 +28,21 @@ const titleStyle: React.CSSProperties = {
   marginTop: '0px',
 };
 
-const SettingsPanel = ({ workout }: SettingsPanelProps): JSX.Element => {
+const SettingsPanel = ({
+  exercise,
+  exerciseState,
+  handleSetExerciseState,
+  handleSetPace,
+}: SettingsPanelProps): JSX.Element => {
   const demoVideoRef = useRef<HTMLIFrameElement>(null);
   const timeoutId = useRef<number | undefined>();
 
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const embedId =
-    workout === 'Seated Shoulder Press'
+    exercise === 'Seated Shoulder Press'
       ? 'b8cNbFvBTgE'
-      : workout === 'Lateral Raises'
+      : exercise === 'Lateral Raises'
       ? 'GKoNZ3WXDLM'
       : '';
 
@@ -66,22 +74,44 @@ const SettingsPanel = ({ workout }: SettingsPanelProps): JSX.Element => {
     setModalOpen(false);
   };
 
+  const handlePressStartStop = (): void => {
+    if (exerciseState === 'START') {
+      handleSetExerciseState('STOP');
+    }
+
+    if (exerciseState === 'STOP') {
+      handleSetExerciseState('START');
+    }
+  };
+
   return (
     <>
       <div style={panelContainerStyle}>
         <Title level={4} style={titleStyle}>
-          {workout}
+          {exercise}
         </Title>
         <div style={panelContentStyle}>
           <Button onClick={() => openModal()}>Watch Demo</Button>
           <Text>Number of Reps</Text>
           <InputNumber min={1} max={12} defaultValue={1} onChange={(value) => console.log(value)} />
+          <Text>Pace</Text>
+          <InputNumber
+            min={4}
+            max={10}
+            defaultValue={6}
+            onChange={(value) => {
+              if (value !== null) handleSetPace(value);
+            }}
+          />
+          <Button onClick={() => handlePressStartStop()}>{`${
+            exerciseState === 'START' ? 'Stop' : exerciseState === 'STOP' ? 'Start' : ''
+          } Exercise`}</Button>
         </div>
       </div>
 
       <Modal
         centered
-        title={`${workout} Demo`}
+        title={`${exercise} Demo`}
         open={modalOpen}
         footer={null}
         onCancel={() => handleCancel()}
