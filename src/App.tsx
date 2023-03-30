@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
 import { Layout, Typography } from 'antd';
+import { grey } from './colors';
 import './App.css';
 
 import Canvas from './components/Canvas';
 import ControlPanel from './components/ControlPanel';
 import WorkoutList from './components/WorkoutList';
 import SettingsPanel from './components/SettingsPanel';
+import ProgressIndicator from './components/ProgressIndicator';
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
 
 const titleStyle: React.CSSProperties = {
-  color: 'white',
+  color: 'black',
   textAlign: 'left',
   marginTop: '0px',
+};
+
+const siderStyle: React.CSSProperties = {
+  backgroundColor: `${grey[2]}`,
 };
 
 const siderContainerStyle: React.CSSProperties = {
@@ -36,7 +42,7 @@ const contentStyle: React.CSSProperties = {
 
 const canvasContainerStyle: React.CSSProperties = {
   minHeight: '480px',
-  height: 'calc(100% - 140px)',
+  height: 'calc(100% - 100px)',
   position: 'relative',
   display: 'flex',
   alignItems: 'center',
@@ -45,6 +51,9 @@ const canvasContainerStyle: React.CSSProperties = {
 
 const timerContainerStyle: React.CSSProperties = {
   height: '100px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 };
 
 function App() {
@@ -58,7 +67,7 @@ function App() {
   return (
     <div className="App">
       <Layout>
-        <Sider width="260px">
+        <Sider width="260px" style={siderStyle}>
           <div style={siderContainerStyle}>
             <Title level={4} style={titleStyle}>
               Select Workout
@@ -75,11 +84,11 @@ function App() {
               <Canvas showCamera={showCamera} />
             </div>
             <div style={timerContainerStyle}>
-              <Title>Testing</Title>
+              <ProgressIndicator />
             </div>
           </Content>
         </Layout>
-        <Sider width="260px">
+        <Sider width="260px" style={siderStyle}>
           <div style={siderContainerStyle}>
             <div style={siderContentStyle}>
               <SettingsPanel workout={selectedWorkout} />

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
-import { Button, Modal, Typography } from 'antd';
+import { Button, Modal, Typography, InputNumber } from 'antd';
 
-const { Title } = Typography;
+const { Text, Title } = Typography;
 
 interface SettingsPanelProps {
   workout: string;
@@ -20,7 +20,7 @@ const panelContentStyle: React.CSSProperties = {
 };
 
 const titleStyle: React.CSSProperties = {
-  color: 'white',
+  color: 'black',
   textAlign: 'left',
   marginTop: '0px',
 };
@@ -67,13 +67,18 @@ const SettingsPanel = ({ workout }: SettingsPanelProps): JSX.Element => {
   };
 
   return (
-    <div style={panelContainerStyle}>
-      <Title level={4} style={titleStyle}>
-        {workout}
-      </Title>
-      <div style={panelContentStyle}>
-        <Button onClick={() => openModal()}>Watch Demo</Button>
+    <>
+      <div style={panelContainerStyle}>
+        <Title level={4} style={titleStyle}>
+          {workout}
+        </Title>
+        <div style={panelContentStyle}>
+          <Button onClick={() => openModal()}>Watch Demo</Button>
+          <Text>Number of Reps</Text>
+          <InputNumber min={1} max={12} defaultValue={1} onChange={(value) => console.log(value)} />
+        </div>
       </div>
+
       <Modal
         centered
         title={`${workout} Demo`}
@@ -93,7 +98,7 @@ const SettingsPanel = ({ workout }: SettingsPanelProps): JSX.Element => {
           style={{ border: 0 }}
         />
       </Modal>
-    </div>
+    </>
   );
 };
 

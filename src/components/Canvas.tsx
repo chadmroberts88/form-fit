@@ -115,6 +115,7 @@ const Canvas = ({ showCamera }: { showCamera: boolean }): JSX.Element => {
         id="video"
         ref={webcamRef}
         style={{
+          backgroundColor: 'white',
           position: 'absolute',
           marginLeft: 'auto',
           marginRight: 'auto',
@@ -142,7 +143,7 @@ const Canvas = ({ showCamera }: { showCamera: boolean }): JSX.Element => {
           borderStyle: 'solid',
           borderColor: 'white',
           borderRadius: 6,
-          backgroundColor: showCamera ? 'white' : 'black',
+          backgroundColor: showCamera ? 'transparent' : 'black',
         }}
       />
     </>

@@ -1,5 +1,7 @@
 import React from 'react';
-import { Switch } from 'antd';
+import { Switch, Typography } from 'antd';
+
+const { Text } = Typography;
 
 const ControlPanel = ({
   showCamera,
@@ -17,7 +19,7 @@ const ControlPanel = ({
         justifyContent: 'space-between',
       }}
     >
-      <p>Camera Image:</p>
+      <Text>Camera Image:</Text>
       <Switch
         checkedChildren="On"
         unCheckedChildren="Off"
