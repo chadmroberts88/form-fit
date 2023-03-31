@@ -4,11 +4,13 @@ import { Button, Modal, Typography, InputNumber } from 'antd';
 const { Text, Title } = Typography;
 
 interface SettingsPanelProps {
+  reps: number;
   pace: number;
   exercise: string;
   exerciseState: string;
   handleSetExerciseState: (exerciseState: string) => void;
   handleSetPace: (pace: number) => void;
+  handleSetReps: (reps: number) => void;
 }
 
 const panelContainerStyle: React.CSSProperties = {
@@ -30,11 +32,13 @@ const titleStyle: React.CSSProperties = {
 };
 
 const SettingsPanel = ({
+  reps,
   pace,
   exercise,
   exerciseState,
   handleSetExerciseState,
   handleSetPace,
+  handleSetReps,
 }: SettingsPanelProps): JSX.Element => {
   const demoVideoRef = useRef<HTMLIFrameElement>(null);
   const timeoutId = useRef<number | undefined>();
@@ -95,7 +99,14 @@ const SettingsPanel = ({
         <div style={panelContentStyle}>
           <Button onClick={() => openModal()}>Watch Demo</Button>
           <Text>Number of Reps</Text>
-          <InputNumber min={1} max={12} defaultValue={1} onChange={(value) => console.log(value)} />
+          <InputNumber
+            min={1}
+            max={12}
+            defaultValue={reps}
+            onChange={(value) => {
+              if (value !== null) handleSetReps(value);
+            }}
+          />
           <Text>Pace</Text>
           <InputNumber
             min={4}

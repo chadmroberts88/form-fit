@@ -1,22 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { Progress } from 'antd';
+import { buildStyles, CircularProgressbarWithChildren } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 interface ProgressIndicatorProps {
+  reps: number;
   pace: number;
   exerciseState: string;
   handleSetExerciseState: (exerciseState: string) => void;
 }
 
 const containerStyle: React.CSSProperties = {
-  width: '80%',
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
 };
 
 const ProgressIndicator = ({
+  reps,
   pace,
   exerciseState,
   handleSetExerciseState,
 }: ProgressIndicatorProps): JSX.Element => {
   const [percent, setPercent] = useState<number>(0);
+  const [repsComplete, setRepsComplete] = useState<number>(1);
   const [intervalId, setIntervalId] = useState<NodeJS.Timer>();
 
   const colors = [
@@ -40,7 +47,7 @@ const ProgressIndicator = ({
     }
 
     if (exerciseState === 'START') {
-      setIntervalId(setInterval(() => setPercent((percent) => percent + 100 / pace), 1000));
+      setIntervalId(setInterval(() => setPercent((percent) => percent + 1 / pace), 10));
     }
 
     return () => clearInterval(intervalId);
@@ -58,13 +65,15 @@ const ProgressIndicator = ({
 
   return (
     <div style={containerStyle}>
-      <Progress
-        steps={pace}
-        percent={percent}
-        showInfo={false}
-        size={[500 / pace, 20]}
-        strokeColor={colors.slice(10 - pace, 10)}
-      />
+      <div style={{ width: '150px', height: '150px' }}>
+        <CircularProgressbarWithChildren
+          value={percent}
+          text={`${Math.floor((percent / 100) * pace)}`}
+          styles={buildStyles({
+            pathTransitionDuration: 0,
+          })}
+        />
+      </div>
     </div>
   );
 };

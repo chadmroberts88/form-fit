@@ -38,12 +38,12 @@ const siderContentStyle: React.CSSProperties = {
 const contentStyle: React.CSSProperties = {
   height: '100%',
   minHeight: '580px',
-  backgroundColor: '#282c34',
+  backgroundColor: `${grey[5]}`,
 };
 
 const canvasContainerStyle: React.CSSProperties = {
   minHeight: '480px',
-  height: 'calc(100% - 100px)',
+  height: 'calc(100% - 200px)',
   position: 'relative',
   display: 'flex',
   alignItems: 'center',
@@ -51,7 +51,7 @@ const canvasContainerStyle: React.CSSProperties = {
 };
 
 const timerContainerStyle: React.CSSProperties = {
-  height: '100px',
+  height: '200px',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -62,6 +62,7 @@ function App() {
   const [showCamera, setShowCamera] = useState<boolean>(true);
   const [selectedExercise, setSelectedExercise] = useState<string>('Seated Shoulder Press');
   const [exerciseState, setExerciseState] = useState<string>('STOP');
+  const [reps, setReps] = useState<number>(12);
   const [pace, setPace] = useState<number>(4);
 
   const handleSetExercise = (exercise: string): void => {
@@ -74,6 +75,10 @@ function App() {
 
   const handleSetPace = (pace: number): void => {
     setPace(pace);
+  };
+
+  const handleSetReps = (reps: number): void => {
+    setReps(reps);
   };
 
   return (
@@ -96,8 +101,8 @@ function App() {
               <Canvas showCamera={showCamera} />
             </div>
             <div style={timerContainerStyle}>
-              <ProgressBar percent={75} showPercent={false} />
               <ProgressIndicator
+                reps={reps}
                 pace={pace}
                 exerciseState={exerciseState}
                 handleSetExerciseState={handleSetExerciseState}
@@ -109,11 +114,13 @@ function App() {
           <div style={siderContainerStyle}>
             <div style={siderContentStyle}>
               <SettingsPanel
+                reps={reps}
                 pace={pace}
                 exercise={selectedExercise}
                 exerciseState={exerciseState}
                 handleSetExerciseState={handleSetExerciseState}
                 handleSetPace={handleSetPace}
+                handleSetReps={handleSetReps}
               />
             </div>
           </div>

@@ -29,7 +29,7 @@ const textStyle: React.CSSProperties = {
 const barBackgroundStyle: React.CSSProperties = {
   height: 'inherit',
   transition: 'width 2s ease-i-out',
-  background: 'linear-gradient(90deg, purple, darkorange)',
+  background: 'linear-gradient(90deg, #a5ea4e, #12ca03)',
 };
 
 const barStyle: React.CSSProperties = {
