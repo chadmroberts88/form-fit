@@ -8,6 +8,7 @@ import ControlPanel from './components/ControlPanel';
 import ExerciseList from './components/ExerciseList';
 import SettingsPanel from './components/SettingsPanel';
 import ProgressIndicator from './components/ProgressIndicator';
+import ProgressBar from './components/ProgressBar';
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
@@ -52,6 +53,7 @@ const canvasContainerStyle: React.CSSProperties = {
 const timerContainerStyle: React.CSSProperties = {
   height: '100px',
   display: 'flex',
+  flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
 };
@@ -94,6 +96,7 @@ function App() {
               <Canvas showCamera={showCamera} />
             </div>
             <div style={timerContainerStyle}>
+              <ProgressBar percent={75} showPercent={false} />
               <ProgressIndicator
                 pace={pace}
                 exerciseState={exerciseState}
@@ -106,6 +109,7 @@ function App() {
           <div style={siderContainerStyle}>
             <div style={siderContentStyle}>
               <SettingsPanel
+                pace={pace}
                 exercise={selectedExercise}
                 exerciseState={exerciseState}
                 handleSetExerciseState={handleSetExerciseState}

@@ -47,7 +47,7 @@ const ProgressIndicator = ({
   }, [exerciseState]);
 
   useEffect(() => {
-    if (percent > 100) {
+    if (percent > 101) {
       clearInterval(intervalId);
       handleSetExerciseState('STOP');
       setPercent(0);

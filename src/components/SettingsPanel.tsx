@@ -4,6 +4,7 @@ import { Button, Modal, Typography, InputNumber } from 'antd';
 const { Text, Title } = Typography;
 
 interface SettingsPanelProps {
+  pace: number;
   exercise: string;
   exerciseState: string;
   handleSetExerciseState: (exerciseState: string) => void;
@@ -29,6 +30,7 @@ const titleStyle: React.CSSProperties = {
 };
 
 const SettingsPanel = ({
+  pace,
   exercise,
   exerciseState,
   handleSetExerciseState,
@@ -97,8 +99,8 @@ const SettingsPanel = ({
           <Text>Pace</Text>
           <InputNumber
             min={4}
-            max={10}
-            defaultValue={6}
+            max={20}
+            defaultValue={pace}
             onChange={(value) => {
               if (value !== null) handleSetPace(value);
             }}
