@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { buildStyles, CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
@@ -68,7 +68,7 @@ const ProgressIndicator = ({
       <div style={{ width: '150px', height: '150px' }}>
         <CircularProgressbarWithChildren
           value={percent}
-          text={`${Math.floor((percent / 100) * pace)}`}
+          text={`${Math.round((percent / 100) * pace)}`}
           styles={buildStyles({
             pathTransitionDuration: 0,
           })}
@@ -78,4 +78,4 @@ const ProgressIndicator = ({
   );
 };
 
-export default ProgressIndicator;
+export default memo(ProgressIndicator);

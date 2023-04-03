@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { memo, useRef } from 'react';
 
 import Webcam from 'react-webcam';
 import { Keypoint } from '@tensorflow-models/pose-detection';
@@ -125,6 +125,7 @@ const Canvas = ({ showCamera }: { showCamera: boolean }): JSX.Element => {
           zIndex: 9,
           width: 640,
           height: 480,
+          borderRadius: 6,
         }}
       />
       <canvas
@@ -150,4 +151,4 @@ const Canvas = ({ showCamera }: { showCamera: boolean }): JSX.Element => {
   );
 };
 
-export default Canvas;
+export default memo(Canvas);
