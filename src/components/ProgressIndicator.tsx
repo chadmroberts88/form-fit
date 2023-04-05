@@ -23,8 +23,10 @@ const ProgressIndicator = ({
   handleSetExerciseState,
 }: ProgressIndicatorProps): JSX.Element => {
   const [percent, setPercent] = useState<number>(0);
-  const [repsComplete, setRepsComplete] = useState<number>(1);
+  const [count, setCount] = useState<number>(0);
+  const [repNumber, setRepNumber] = useState<number>(1);
   const [intervalId, setIntervalId] = useState<NodeJS.Timer>();
+  const [countIntervalId, setCountIntervalId] = useState<NodeJS.Timer>();
 
   const colors = [
     '#d1fa6e',
@@ -41,38 +43,53 @@ const ProgressIndicator = ({
 
   useEffect(() => {
     if (exerciseState === 'STOP') {
-      if (intervalId !== undefined) {
-        clearInterval(intervalId);
+      if (countIntervalId !== undefined) {
+        clearInterval(countIntervalId);
       }
     }
 
     if (exerciseState === 'START') {
-      setIntervalId(setInterval(() => setPercent((percent) => percent + 1 / pace), 10));
+      if (repNumber > reps) setRepNumber(1);
+      setCountIntervalId(setInterval(() => setCount((prev) => prev + 1), 1000));
     }
 
-    return () => clearInterval(intervalId);
+    return () => {
+      clearInterval(countIntervalId);
+    };
   }, [exerciseState]);
 
   useEffect(() => {
-    if (percent > 101) {
-      clearInterval(intervalId);
-      handleSetExerciseState('STOP');
-      setPercent(0);
+    if (count > pace) {
+      if (repNumber === reps) {
+        clearInterval(countIntervalId);
+        handleSetExerciseState('STOP');
+      }
+      setRepNumber((prev) => prev + 1);
+      setCount(0);
     }
-  }, [percent]);
-
-  console.log(percent);
+  }, [count]);
 
   return (
     <div style={containerStyle}>
       <div style={{ width: '150px', height: '150px' }}>
         <CircularProgressbarWithChildren
-          value={percent}
-          text={`${Math.round((percent / 100) * pace)}`}
+          value={(count / pace) * 100}
+          text={`${
+            repNumber > reps
+              ? 'Done'
+              : repNumber === 1 && count === 0
+              ? 'Ready'
+              : repNumber !== 1 && count === 0
+              ? 'Reset'
+              : count
+          }`}
           styles={buildStyles({
             pathTransitionDuration: 0,
           })}
         />
+        <div style={{ color: 'black', fontSize: '20px' }}>
+          Rep: {repNumber > reps ? repNumber - 1 : repNumber}
+        </div>
       </div>
     </div>
   );
