@@ -22,10 +22,8 @@ const ProgressIndicator = ({
   exerciseState,
   handleSetExerciseState,
 }: ProgressIndicatorProps): JSX.Element => {
-  const [percent, setPercent] = useState<number>(0);
   const [count, setCount] = useState<number>(0);
   const [repNumber, setRepNumber] = useState<number>(1);
-  const [intervalId, setIntervalId] = useState<NodeJS.Timer>();
   const [countIntervalId, setCountIntervalId] = useState<NodeJS.Timer>();
 
   const colors = [
