@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/form-trainer/static/css/main.4d591974.css",
+    "main.js": "/form-trainer/static/js/main.0b027f4e.js",
+    "static/js/787.4f85bbc1.chunk.js": "/form-trainer/static/js/787.4f85bbc1.chunk.js",
+    "index.html": "/form-trainer/index.html",
+    "main.4d591974.css.map": "/form-trainer/static/css/main.4d591974.css.map",
+    "main.0b027f4e.js.map": "/form-trainer/static/js/main.0b027f4e.js.map",
+    "787.4f85bbc1.chunk.js.map": "/form-trainer/static/js/787.4f85bbc1.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4d591974.css",
+    "static/js/main.0b027f4e.js"
+  ]
+}
