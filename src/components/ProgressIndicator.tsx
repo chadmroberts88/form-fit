@@ -26,19 +26,6 @@ const ProgressIndicator = ({
   const [repNumber, setRepNumber] = useState<number>(1);
   const [countIntervalId, setCountIntervalId] = useState<NodeJS.Timer>();
 
-  const colors = [
-    '#d1fa6e',
-    '#c3f563',
-    '#b4ef58',
-    '#a5ea4e',
-    '#95e543',
-    '#84e039',
-    '#71da2e',
-    '#5bd523',
-    '#41cf16',
-    '#12ca03',
-  ];
-
   useEffect(() => {
     if (exerciseState === 'STOP') {
       if (countIntervalId !== undefined) {

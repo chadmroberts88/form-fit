@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Layout, Typography } from 'antd';
 import { grey } from './colors';
+import { Provider } from 'react-redux';
+import store from './state/store';
 import './App.css';
 
 import Canvas from './components/Canvas';
@@ -8,7 +10,6 @@ import ControlPanel from './components/ControlPanel';
 import ExerciseList from './components/ExerciseList';
 import SettingsPanel from './components/SettingsPanel';
 import ProgressIndicator from './components/ProgressIndicator';
-import ProgressBar from './components/ProgressBar';
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
@@ -65,6 +66,8 @@ function App() {
   const [reps, setReps] = useState<number>(12);
   const [pace, setPace] = useState<number>(4);
 
+  console.log(store.getState());
+
   const handleSetExercise = (exercise: string): void => {
     setSelectedExercise(exercise);
   };
@@ -82,51 +85,53 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <Layout>
-        <Sider width="260px" style={siderStyle}>
-          <div style={siderContainerStyle}>
-            <Title level={4} style={titleStyle}>
-              Select Exercise
-            </Title>
-            <div style={siderContentStyle}>
-              <ExerciseList handleSetExercise={handleSetExercise} />
-              <ControlPanel showCamera={showCamera} setShowCamera={setShowCamera} />
-            </div>
-          </div>
-        </Sider>
+    <Provider store={store}>
+      <div className="App">
         <Layout>
-          <Content style={contentStyle}>
-            <div style={canvasContainerStyle}>
-              <Canvas showCamera={showCamera} />
+          <Sider width="260px" style={siderStyle}>
+            <div style={siderContainerStyle}>
+              <Title level={4} style={titleStyle}>
+                Select Exercise
+              </Title>
+              <div style={siderContentStyle}>
+                <ExerciseList handleSetExercise={handleSetExercise} />
+                <ControlPanel showCamera={showCamera} setShowCamera={setShowCamera} />
+              </div>
             </div>
-            <div style={timerContainerStyle}>
-              <ProgressIndicator
-                reps={reps}
-                pace={pace}
-                exerciseState={exerciseState}
-                handleSetExerciseState={handleSetExerciseState}
-              />
+          </Sider>
+          <Layout>
+            <Content style={contentStyle}>
+              <div style={canvasContainerStyle}>
+                <Canvas showCamera={showCamera} />
+              </div>
+              <div style={timerContainerStyle}>
+                <ProgressIndicator
+                  reps={reps}
+                  pace={pace}
+                  exerciseState={exerciseState}
+                  handleSetExerciseState={handleSetExerciseState}
+                />
+              </div>
+            </Content>
+          </Layout>
+          <Sider width="260px" style={siderStyle}>
+            <div style={siderContainerStyle}>
+              <div style={siderContentStyle}>
+                <SettingsPanel
+                  reps={reps}
+                  pace={pace}
+                  exercise={selectedExercise}
+                  exerciseState={exerciseState}
+                  handleSetExerciseState={handleSetExerciseState}
+                  handleSetPace={handleSetPace}
+                  handleSetReps={handleSetReps}
+                />
+              </div>
             </div>
-          </Content>
+          </Sider>
         </Layout>
-        <Sider width="260px" style={siderStyle}>
-          <div style={siderContainerStyle}>
-            <div style={siderContentStyle}>
-              <SettingsPanel
-                reps={reps}
-                pace={pace}
-                exercise={selectedExercise}
-                exerciseState={exerciseState}
-                handleSetExerciseState={handleSetExerciseState}
-                handleSetPace={handleSetPace}
-                handleSetReps={handleSetReps}
-              />
-            </div>
-          </div>
-        </Sider>
-      </Layout>
-    </div>
+      </div>
+    </Provider>
   );
 }
 
